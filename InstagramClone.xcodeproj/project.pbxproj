@@ -13,6 +13,7 @@
 		A9D2297D29E54417003A7BE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9D2297B29E54417003A7BE7 /* Main.storyboard */; };
 		A9D2297F29E54419003A7BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9D2297E29E54419003A7BE7 /* Assets.xcassets */; };
 		A9D2298229E54419003A7BE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9D2298029E54419003A7BE7 /* LaunchScreen.storyboard */; };
+		A9D2299029E6BCE2003A7BE7 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A9D2297E29E54419003A7BE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9D2298129E54419003A7BE7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9D2298329E54419003A7BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,12 @@
 		A9D2297429E54417003A7BE7 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				A9D2298E29E6BC17003A7BE7 /* Model */,
+				A9D2298D29E6BC16003A7BE7 /* View */,
+				A9D2298C29E6BC15003A7BE7 /* ViewModel */,
+				A9D2298B29E6BC13003A7BE7 /* Controller */,
+				A9D2298A29E6BC04003A7BE7 /* API */,
+				A9D2298929E6BC01003A7BE7 /* Utils */,
 				A9D2297529E54417003A7BE7 /* AppDelegate.swift */,
 				A9D2297729E54417003A7BE7 /* SceneDelegate.swift */,
 				A9D2297929E54417003A7BE7 /* ViewController.swift */,
@@ -65,6 +73,50 @@
 				A9D2298329E54419003A7BE7 /* Info.plist */,
 			);
 			path = InstagramClone;
+			sourceTree = "<group>";
+		};
+		A9D2298929E6BC01003A7BE7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
+			path = ../Utils;
+			sourceTree = "<group>";
+		};
+		A9D2298A29E6BC04003A7BE7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		A9D2298B29E6BC13003A7BE7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A9D2298C29E6BC15003A7BE7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A9D2298D29E6BC16003A7BE7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A9D2298E29E6BC17003A7BE7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +192,7 @@
 			files = (
 				A9D2297A29E54417003A7BE7 /* ViewController.swift in Sources */,
 				A9D2297629E54417003A7BE7 /* AppDelegate.swift in Sources */,
+				A9D2299029E6BCE2003A7BE7 /* MainTabController.swift in Sources */,
 				A9D2297829E54417003A7BE7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
