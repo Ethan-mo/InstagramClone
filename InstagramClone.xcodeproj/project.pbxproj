@@ -14,6 +14,13 @@
 		A9D2297F29E54419003A7BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9D2297E29E54419003A7BE7 /* Assets.xcassets */; };
 		A9D2298229E54419003A7BE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9D2298029E54419003A7BE7 /* LaunchScreen.storyboard */; };
 		A9D2299029E6BCE2003A7BE7 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */; };
+		A9D2299229ED677D003A7BE7 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299129ED677D003A7BE7 /* FeedController.swift */; };
+		A9D2299429ED6789003A7BE7 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299329ED6789003A7BE7 /* SearchController.swift */; };
+		A9D2299629ED679C003A7BE7 /* ImageSelectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299529ED679C003A7BE7 /* ImageSelectorController.swift */; };
+		A9D2299829ED67AA003A7BE7 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299729ED67AA003A7BE7 /* NotificationController.swift */; };
+		A9D2299A29ED67B3003A7BE7 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299929ED67B3003A7BE7 /* ProfileController.swift */; };
+		A9D2299C29EE626B003A7BE7 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299B29EE626B003A7BE7 /* FeedCell.swift */; };
+		A9D2299E29EEA45F003A7BE7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D2299D29EEA45F003A7BE7 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,13 @@
 		A9D2298129E54419003A7BE7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9D2298329E54419003A7BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
+		A9D2299129ED677D003A7BE7 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
+		A9D2299329ED6789003A7BE7 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		A9D2299529ED679C003A7BE7 /* ImageSelectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectorController.swift; sourceTree = "<group>"; };
+		A9D2299729ED67AA003A7BE7 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		A9D2299929ED67B3003A7BE7 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		A9D2299B29EE626B003A7BE7 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		A9D2299D29EEA45F003A7BE7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +92,7 @@
 		A9D2298929E6BC01003A7BE7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				A9D2299D29EEA45F003A7BE7 /* Extension.swift */,
 			);
 			name = Utils;
 			path = ../Utils;
@@ -94,6 +109,11 @@
 			isa = PBXGroup;
 			children = (
 				A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */,
+				A9D2299129ED677D003A7BE7 /* FeedController.swift */,
+				A9D2299329ED6789003A7BE7 /* SearchController.swift */,
+				A9D2299529ED679C003A7BE7 /* ImageSelectorController.swift */,
+				A9D2299729ED67AA003A7BE7 /* NotificationController.swift */,
+				A9D2299929ED67B3003A7BE7 /* ProfileController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -108,6 +128,7 @@
 		A9D2298D29E6BC16003A7BE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A9D2299B29EE626B003A7BE7 /* FeedCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,7 +212,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D2297A29E54417003A7BE7 /* ViewController.swift in Sources */,
+				A9D2299C29EE626B003A7BE7 /* FeedCell.swift in Sources */,
+				A9D2299629ED679C003A7BE7 /* ImageSelectorController.swift in Sources */,
+				A9D2299829ED67AA003A7BE7 /* NotificationController.swift in Sources */,
+				A9D2299E29EEA45F003A7BE7 /* Extension.swift in Sources */,
+				A9D2299429ED6789003A7BE7 /* SearchController.swift in Sources */,
 				A9D2297629E54417003A7BE7 /* AppDelegate.swift in Sources */,
+				A9D2299A29ED67B3003A7BE7 /* ProfileController.swift in Sources */,
+				A9D2299229ED677D003A7BE7 /* FeedController.swift in Sources */,
 				A9D2299029E6BCE2003A7BE7 /* MainTabController.swift in Sources */,
 				A9D2297829E54417003A7BE7 /* SceneDelegate.swift in Sources */,
 			);
@@ -340,7 +368,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SAGYL6ACJY;
+				DEVELOPMENT_TEAM = URTJJ24R4X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InstagramClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -368,7 +396,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = SAGYL6ACJY;
+				DEVELOPMENT_TEAM = URTJJ24R4X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InstagramClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
