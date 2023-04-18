@@ -18,11 +18,13 @@ class FeedCell: UICollectionViewCell {
     private var nameLabel: UILabel = {
        let lb = UILabel()
         lb.backgroundColor = .yellow
+        lb.text = "이름은 땡떙이야 "
         return lb
     }()
     private var menuButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.backgroundColor = .blue
+        btn.setImage(UIImage(systemName: "server.rack"), for: .normal)
         btn.addTarget(self, action: #selector(handleMenuButton), for: .touchUpInside)
         return btn
     }()
@@ -99,8 +101,14 @@ class FeedCell: UICollectionViewCell {
         topStack.alignment = .leading
 
         
-        let bottomStack = UIStackView(arrangedSubviews: [likeButton, replyButton, menuButton, shareButton])
+        let bottomStack = UIStackView(arrangedSubviews: [likeButton, replyButton, messageButton, shareButton])
         bottomStack.axis = .horizontal
+        bottomStack.alignment = .leading
+        bottomStack.spacing = 8
+        bottomStack.distribution = .fillProportionally
+        
+        
+        
         let stack = UIStackView(arrangedSubviews: [topStack, mainImageView, bottomStack, countLikeLabel, replyLogLable])
         stack.axis = .vertical
         
