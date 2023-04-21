@@ -19,7 +19,6 @@ class FeedController: UICollectionViewController {
     }
     // MARK: - Helper
     func configureUI() {
-        collectionView.backgroundColor = .systemPurple
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
 }
@@ -36,6 +35,9 @@ extension FeedController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 500)
+        let width = view.frame.width
+        var height = width + 8 + 40 + 8
+        height += 110
+        return CGSize(width: view.frame.width, height: height)
     }
 }
