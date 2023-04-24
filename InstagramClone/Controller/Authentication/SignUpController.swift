@@ -19,41 +19,65 @@ class SignUpController: UIViewController {
         btn.addTarget(self, action: #selector(selectProfileImageButton), for: .touchUpInside)
         return btn
     }()
-    private var emailInputView: UIView = {
-        let view = Utilities().inputContainerView(placeHolderText: "Email")
+    private lazy var emailInputView: UIView = {
+        let view = Utilities().inputContainerView(placeHolderText: "Email",textField: emailTextField)
         return view
     }()
-    private var passwordInputView: UIView = {
-        let view = Utilities().inputContainerView(placeHolderText: "Password")
+    private lazy var passwordInputView: UIView = {
+        let view = Utilities().inputContainerView(placeHolderText: "Password", textField: passwordTextField)
         return view
     }()
-    private var fullnameInputView: UIView = {
-        let view = Utilities().inputContainerView(placeHolderText: "Fullname")
+    private lazy var fullnameInputView: UIView = {
+        let view = Utilities().inputContainerView(placeHolderText: "Fullname", textField: fullnameTextField)
         return view
     }()
-    private var nicknameInputView: UIView = {
-        let view = Utilities().inputContainerView(placeHolderText: "Nickname")
+    private lazy var nicknameInputView: UIView = {
+        let view = Utilities().inputContainerView(placeHolderText: "Nickname", textField: nicknameTextField)
         return view
     }()
+    private let emailTextField: UITextField = {
+       let tf = UITextField()
+        return tf
+    }()
+    private let passwordTextField: UITextField = {
+       let tf = UITextField()
+        tf.isSecureTextEntry = true
+        return tf
+    }()
+    private let fullnameTextField: UITextField = {
+       let tf = UITextField()
+        return tf
+    }()
+    private let nicknameTextField: UITextField = {
+       let tf = UITextField()
+        return tf
+    }()
+    
     private var signUpButton:UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("회원가입", for: .normal)
+        btn.setTitle("Email과 Password를 입력해주세요.", for: .normal)
+        btn.layer.cornerRadius = 5
+        btn.backgroundColor = UIColor.systemGroupedBackground
         btn.setTitleColor(UIColor.systemPurple, for: .normal)
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        btn.backgroundColor = .white
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return btn
     }()
     private var moveToLogIn: UIButton = {
         let btn = Utilities().button("계정이 있으신가요? ", "로그인하기")
+        btn.addTarget(self, action: #selector(tappedLogInButton), for: .touchUpInside)
         return btn
     }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        fullnameTextField.delegate = self
+        nicknameTextField.delegate = self
         
+        configureUI()
     }
     // MARK: - Selectors
     @objc func selectProfileImageButton() {
@@ -63,9 +87,15 @@ class SignUpController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true)
     }
+    @objc func tappedLogInButton() {
+        print("로그인 화면으로 돌아갑니다.")
+        navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Helper
     func configureUI() {
         setGradientLayer()
+        configureNavigationUI()
         
         view.addSubview(plusPushButton)
         plusPushButton.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor, paddingTop: 20)
@@ -82,13 +112,20 @@ class SignUpController: UIViewController {
         view.addSubview(moveToLogIn)
         moveToLogIn.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12)
     }
-    func setGradientLayer() {
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
-        gradient.locations = [0, 1]
-        view.layer.addSublayer(gradient)
-        gradient.frame = view.frame
+    
+    func configureNavigationUI() {
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.barStyle = .black
     }
+    
+    func signUpButtonViewModel() {
+        let viewModel = SignUpViewModel(profileImage: profileImage, email: emailTextField.text, password: passwordTextField.text,fullname: fullnameTextField.text, nickname: nicknameTextField.text, btn: signUpButton)
+        signUpButton = viewModel.settingButton
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
 }
 
 extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -107,4 +144,10 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         dismiss(animated: true)
     }
     
+}
+
+extension SignUpController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        signUpButtonViewModel()
+    }
 }

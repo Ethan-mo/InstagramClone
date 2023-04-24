@@ -13,21 +13,31 @@ class LoginController: UIViewController {
         let iv = UIImageView(image: #imageLiteral(resourceName: "Instagram_logo_white"))
         return iv
     }()
-    private var emailView:UIView  = {
-        let view = Utilities().inputContainerView(placeHolderText: "Email")
+    private lazy var emailView:UIView  = {
+        let view = Utilities().inputContainerView(placeHolderText: "Email", textField: emailTextField)
         return view
     }()
-    private var passwordView: UIView = {
-        let view = Utilities().inputContainerView(placeHolderText: "Password")
+    private lazy var passwordView: UIView = {
+        let view = Utilities().inputContainerView(placeHolderText: "Password", textField: passwordTextField)
         return view
+    }()
+    private let emailTextField: UITextField = {
+       let tf = UITextField()
+        return tf
+    }()
+    private let passwordTextField: UITextField = {
+       let tf = UITextField()
+        tf.isSecureTextEntry = true
+        return tf
     }()
     private lazy var signInButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        btn.setTitle("Log in", for: .normal)
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        btn.backgroundColor = .systemPurple
-        btn.setTitleColor(.white, for: .normal)
+        btn.setTitle("Email과 Password를 입력해주세요.", for: .normal)
+        btn.backgroundColor = UIColor.systemGroupedBackground
+        btn.setTitleColor(UIColor.systemPurple, for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        btn.layer.cornerRadius = 5
         return btn
     }()
     private var stateLabel: UIButton = {
@@ -43,6 +53,8 @@ class LoginController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         configureUI()
         
     }
@@ -53,10 +65,13 @@ class LoginController: UIViewController {
     
     @objc func TappedSignUp() {
         print("회원가입 버튼을 누르셨습니다.")
+        let controller = SignUpController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     // MARK: - Helper
     func configureUI() {
         setGradientLayer()
+        configureNavigationUI()
         
         view.addSubview(logoImageView)
         logoImageView.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: 80)
@@ -70,12 +85,25 @@ class LoginController: UIViewController {
         view.addSubview(moveToSignUpLabel)
         moveToSignUpLabel.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 12, paddingBottom: 20, paddingRight: 12)
     }
-    func setGradientLayer() {
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
-        gradient.locations = [0, 1]
-        view.layer.addSublayer(gradient)
-        gradient.frame = view.frame
+    
+    func configureNavigationUI() {
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.barStyle = .black // 이부분을 통해, 디바이스 가장 위 상태버튼들의 색상이 흰색으로 바뀐다.(네비게이션 바가 검은색이니, 대비되게 흰색으로 바뀌는 것)
     }
     
+    func loginButtonViewModel() {
+        var viewModel = LoginViewModel(email: emailTextField.text, password: passwordTextField.text, btn: signInButton)
+        signInButton = viewModel.settingButton
+        
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+extension LoginController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        print("실행됨")
+        loginButtonViewModel()
+    }
 }
