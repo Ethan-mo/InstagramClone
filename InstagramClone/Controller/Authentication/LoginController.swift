@@ -37,17 +37,18 @@ class LoginController: UIViewController {
         btn.backgroundColor = UIColor.systemGroupedBackground
         btn.setTitleColor(UIColor.systemPurple, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        btn.addTarget(self, action: #selector(tappedLogIn), for: .touchUpInside)
         btn.layer.cornerRadius = 5
         return btn
     }()
     private var stateLabel: UIButton = {
         let btn = Utilities().button("비밀번호를 잊으셨나요? ", "비밀번호 찾기")
-        btn.addTarget(self, action: #selector(TappedSearchPassword), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(tappedSearchPassword), for: .touchUpInside)
         return btn
     }()
     private var moveToSignUpLabel: UIButton = {
         let btn = Utilities().button("계정이 없으신가요? ", "회원가입")
-        btn.addTarget(self, action: #selector(TappedSignUp), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(tappedSignUp), for: .touchUpInside)
         return btn
     }()
     // MARK: - Lifecycle
@@ -59,11 +60,24 @@ class LoginController: UIViewController {
         
     }
     // MARK: - Selectors
-    @objc func TappedSearchPassword() {
+    @objc func tappedSearchPassword() {
         print("비밀번호 찾기를 누르셨습니다.")
     }
+    @objc func tappedLogIn() {
+        print("로그인을 시도합니다.")
+            guard let email = emailTextField.text?.lowercased() else { return }
+            guard let password = passwordTextField.text else { return }
+            AuthenticationService.logInUser(email: email, password: password) { result, error in
+                if let error = error {
+                    print("로그인에 실패하였습니다.")
+                    return
+                }
+                print("로그인에 성공했습니다.")
+            }
+        navigationController?.popViewController(animated: true)
+    }
     
-    @objc func TappedSignUp() {
+    @objc func tappedSignUp() {
         print("회원가입 버튼을 누르셨습니다.")
         let controller = SignUpController()
         navigationController?.pushViewController(controller, animated: true)
@@ -83,7 +97,7 @@ class LoginController: UIViewController {
         stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 30, paddingLeft: 20, paddingRight: 20)
         
         view.addSubview(moveToSignUpLabel)
-        moveToSignUpLabel.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 12, paddingBottom: 20, paddingRight: 12)
+        moveToSignUpLabel.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 12, paddingBottom: 40, paddingRight: 12)
     }
     
     func configureNavigationUI() {
