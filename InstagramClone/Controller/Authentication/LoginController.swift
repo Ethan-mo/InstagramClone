@@ -25,6 +25,7 @@ class LoginController: UIViewController {
         let btn = UIButton(type: .system)
         btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
         btn.setTitle("Log in", for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         btn.backgroundColor = .systemPurple
         btn.setTitleColor(.white, for: .normal)
         return btn
