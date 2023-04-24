@@ -115,14 +115,13 @@
 		A9D2298B29E6BC13003A7BE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A9D229A529F61694003A7BE7 /* Authentication */,
 				A9D2298F29E6BCE2003A7BE7 /* MainTabController.swift */,
 				A9D2299129ED677D003A7BE7 /* FeedController.swift */,
 				A9D2299329ED6789003A7BE7 /* SearchController.swift */,
 				A9D2299529ED679C003A7BE7 /* ImageSelectorController.swift */,
 				A9D2299729ED67AA003A7BE7 /* NotificationController.swift */,
 				A9D2299929ED67B3003A7BE7 /* ProfileController.swift */,
-				A9D2299F29F220D0003A7BE7 /* LoginController.swift */,
-				A9D229A129F2210D003A7BE7 /* SignUpController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -147,6 +146,15 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A9D229A529F61694003A7BE7 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				A9D2299F29F220D0003A7BE7 /* LoginController.swift */,
+				A9D229A129F2210D003A7BE7 /* SignUpController.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

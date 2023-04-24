@@ -14,11 +14,21 @@ class Utilities{
         view.layer.cornerRadius = 5
         
         let tf = UITextField()
+        tf.attributedPlaceholder = NSAttributedString(string: placeHolderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray6])
         tf.textColor = .white
-        tf.attributedPlaceholder = NSAttributedString(string: placeHolderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        tf.autocorrectionType = .no
         view.addSubview(tf)
         tf.anchor(top:view.topAnchor,left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 12)
         
         return view
+    }
+    func button(_ descriptionLabel: String, _ title: String) -> UIButton{
+        let btn = UIButton(type: .system)
+        
+        /// 하이퍼링크 라벨형 버튼 제작
+        let attributedTitle = NSMutableAttributedString(string: descriptionLabel, attributes: [NSMutableAttributedString.Key.font: UIFont.systemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: UIColor.white])
+        attributedTitle.append(NSMutableAttributedString(string: title, attributes: [NSMutableAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: UIColor.white]))
+        btn.setAttributedTitle(attributedTitle, for: .normal)
+        return btn
     }
 }
