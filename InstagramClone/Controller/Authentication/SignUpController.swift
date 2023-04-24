@@ -61,6 +61,7 @@ class SignUpController: UIViewController {
         btn.setTitleColor(UIColor.systemPurple, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        btn.addTarget(self, action: #selector(tappedSignUp), for: .touchUpInside)
         return btn
     }()
     private var moveToLogIn: UIButton = {
@@ -87,9 +88,33 @@ class SignUpController: UIViewController {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true)
     }
+    @objc func tappedSignUp() {
+        print("회원가입을 시도합니다.")
+        createUserAccount()
+    }
+    
     @objc func tappedLogInButton() {
         print("로그인 화면으로 돌아갑니다.")
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - API
+    func createUserAccount() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let fullname = fullnameTextField.text else { return }
+        guard let nickname = nicknameTextField.text?.lowercased() else { return }
+        guard let profileImage = self.profileImage ?? UIImage(systemName: "person.circle.fill") else { return }
+        
+        let authCredentials = AuthCredentials(email: email, password: password, fullname: fullname, username: nickname, profileImage: profileImage)
+        AuthenticationService.createUserAccount(withCredential: authCredentials) { error in
+            if let error = error {
+                print("계정 생성에 실패하였습니다.")
+            }
+            print("계정 생성에 성공하였습니다.")
+        }
+        navigationController?.popViewController(animated: true)
+        
     }
     
     // MARK: - Helper

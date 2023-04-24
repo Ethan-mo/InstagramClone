@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MainTabController: UITabBarController {
     // MARK: - Properties
@@ -13,9 +14,9 @@ class MainTabController: UITabBarController {
     // MARK: - Lifecycle
     override func viewDidLoad(){
         super.viewDidLoad()
+        //logUserOut()
+        authenticateUserAndConfigureUI()
         
-        configureViewControllers()
-        configureTabBar()
     }
     // MARK: - Helper
     func configureViewControllers() {
@@ -33,9 +34,33 @@ class MainTabController: UITabBarController {
         
         viewControllers = [feed, search, imageSelector, notifications, profile]
     }
+    
     func authenticateUserAndConfigureUI() {
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+        } else {
+            print("최근 로그인한 기록이 있습니다.")
+            configureViewControllers()
+            configureTabBar()
+        }
         
+            
     }
+    
+    func logUserOut(){
+        do{
+            // 1) 로그아웃
+            try Auth.auth().signOut()
+            print("DEBUG: logout에 성공하였습니다.")
+        }catch let error{
+            print("DEBUG: Failed to sign out with error\(error.localizedDescription)")
+        }
+    }
+    
     func configureTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
