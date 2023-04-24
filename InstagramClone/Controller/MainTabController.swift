@@ -33,6 +33,9 @@ class MainTabController: UITabBarController {
         
         viewControllers = [feed, search, imageSelector, notifications, profile]
     }
+    func authenticateUserAndConfigureUI() {
+        
+    }
     func configureTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()

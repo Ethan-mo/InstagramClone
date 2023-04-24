@@ -83,8 +83,18 @@ extension UIView {
     }
 }
 
-// MARK: - UIColor
+// MARK: - UIViewController
+extension UIViewController {
+    func setGradientLayer() {
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.systemPurple.cgColor, UIColor.systemBlue.cgColor]
+        gradient.locations = [0, 1]
+        view.layer.addSublayer(gradient)
+        gradient.frame = view.frame
+    }
+}
 
+// MARK: - UIColor
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
