@@ -15,8 +15,16 @@ class MainTabController: UITabBarController {
     override func viewDidLoad(){
         super.viewDidLoad()
         //logUserOut()
-        authenticateUserAndConfigureUI()
+        configureViewControllers()
+        configureTabBar()
+        //authenticateUserAndConfigureUI()
         
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser == nil {
+            authenticateUserAndConfigureUI()
+        }
     }
     // MARK: - Helper
     func configureViewControllers() {
@@ -36,19 +44,11 @@ class MainTabController: UITabBarController {
     }
     
     func authenticateUserAndConfigureUI() {
-        if Auth.auth().currentUser == nil {
-            DispatchQueue.main.async {
-                let nav = UINavigationController(rootViewController: LoginController())
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
-            }
-        } else {
-            print("최근 로그인한 기록이 있습니다.")
-            configureViewControllers()
-            configureTabBar()
+        DispatchQueue.main.async {
+            let nav = UINavigationController(rootViewController: LoginController())
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: false, completion: nil)
         }
-        
-            
     }
     
     func logUserOut(){
