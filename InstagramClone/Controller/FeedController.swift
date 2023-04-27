@@ -6,20 +6,44 @@
 //
 
 import UIKit
+import Firebase
+
 private let reuseIdentifier = "FeedCell"
+
+protocol FeedControllerDelegate: class {
+    func didRequestLogout()
+}
 
 class FeedController: UICollectionViewController {
     // MARK: - Properties
-    
+    weak var delegate: FeedControllerDelegate?
     // MARK: - Lifecycle
     override func viewDidLoad(){
         super.viewDidLoad()
         configureUI()
-        
+        configureNavigationUI()
     }
+    
     // MARK: - Helper
     func configureUI() {
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    }
+    func configureNavigationUI() {
+        navigationController?.navigationBar.backgroundColor = .systemGroupedBackground
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(tappedLogout))
+    }
+    // MARK: - Seletors
+    @objc func tappedLogout() {
+        do{
+            try Auth.auth().signOut()
+            print("DEBUG: logout에 성공하였습니다.")
+            delegate?.didRequestLogout()
+            
+            
+            
+        }catch let error{
+            print("DEBUG: Failed to sign out with error\(error.localizedDescription)")
+        }
     }
 }
 // MARK: - UICollectionViewDataSource

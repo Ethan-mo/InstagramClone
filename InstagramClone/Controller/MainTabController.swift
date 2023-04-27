@@ -14,10 +14,8 @@ class MainTabController: UITabBarController {
     // MARK: - Lifecycle
     override func viewDidLoad(){
         super.viewDidLoad()
-        //logUserOut()
         configureViewControllers()
         configureTabBar()
-        //authenticateUserAndConfigureUI()
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -28,19 +26,21 @@ class MainTabController: UITabBarController {
     }
     // MARK: - Helper
     func configureViewControllers() {
-        let layout = UICollectionViewFlowLayout()
-        let feed = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: FeedController(collectionViewLayout: layout))
+        let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
+        feed.delegate = self
+        let nav1 = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: feed)
         
         let search = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: SearchController())
         
         let imageSelector = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "plus_unselected"), selectedImage: #imageLiteral(resourceName: "plus_unselected"), rootViewController: ImageSelectorController())
         
-        
         let notifications = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "like_unselected"), selectedImage: #imageLiteral(resourceName: "like_selected"), rootViewController: NotificationController())
         
-        let profile = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"), selectedImage: #imageLiteral(resourceName: "profile_selected"), rootViewController: ProfileController())
         
-        viewControllers = [feed, search, imageSelector, notifications, profile]
+        let profile = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        let nav4 = templateNavigationController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"), selectedImage: #imageLiteral(resourceName: "profile_selected"), rootViewController: profile)
+        
+        viewControllers = [nav1, search, imageSelector, notifications, nav4]
     }
     
     func authenticateUserAndConfigureUI() {
@@ -50,24 +50,13 @@ class MainTabController: UITabBarController {
             self.present(nav, animated: false, completion: nil)
         }
     }
-    
-    func logUserOut(){
-        do{
-            // 1) 로그아웃
-            try Auth.auth().signOut()
-            print("DEBUG: logout에 성공하였습니다.")
-        }catch let error{
-            print("DEBUG: Failed to sign out with error\(error.localizedDescription)")
-        }
-    }
-    
+        
     func configureTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         UIApplication.shared.statusBarStyle = .lightContent
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
-        
         tabBar.tintColor = .black
     }
     func templateNavigationController(unselectedImage: UIImage, selectedImage: UIImage, rootViewController: UIViewController) -> UINavigationController {
@@ -76,5 +65,15 @@ class MainTabController: UITabBarController {
         nav.tabBarItem.selectedImage = selectedImage
         nav.navigationBar.tintColor = .black
         return nav
+    }
+}
+
+extension MainTabController: FeedControllerDelegate {
+    func didRequestLogout() {
+        print("Delegate 실행합니다.")
+        if Auth.auth().currentUser == nil {
+            print("정상적으로 로그아웃이 된 것이 확인되었습니다.")
+            authenticateUserAndConfigureUI()
+        }
     }
 }
