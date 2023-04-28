@@ -31,4 +31,15 @@ class Utilities{
         btn.setAttributedTitle(attributedTitle, for: .normal)
         return btn
     }
+    func customButton(text: String, backgroundColor: UIColor, textColor: UIColor) -> UIButton {
+        let btn = UIButton(type: .system)
+        btn.setTitle(text, for: .normal)
+        btn.backgroundColor = backgroundColor
+        btn.setTitleColor(textColor, for: .normal)
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        btn.layer.borderColor = UIColor.systemGroupedBackground.cgColor
+        btn.layer.borderWidth = 1
+        btn.layer.cornerRadius = 5
+        return btn
+    }
 }

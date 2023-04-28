@@ -73,8 +73,9 @@ class LoginController: UIViewController {
                     return
                 }
                 print("로그인에 성공했습니다.")
+                self.dismiss(animated: true)
             }
-        navigationController?.popViewController(animated: true)
+        
     }
     
     @objc func tappedSignUp() {
