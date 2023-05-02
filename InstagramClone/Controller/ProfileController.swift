@@ -10,15 +10,31 @@ import UIKit
 private let cellIdentifier = "ProfileCell"
 private let headerIdentifier = "ProfileHeader"
 
+
 class ProfileController: UICollectionViewController {
     // MARK: - Properties
-    
+    var user: User? {
+        didSet{
+            navigationItem.title = user?.nickname
+            collectionView.reloadData()
+        }
+    }
     // MARK: - Lifecycle
     override func viewDidLoad(){
         super.viewDidLoad()
         configureCollectionView()
         view.backgroundColor = .systemYellow
+        fetchUser()
     }
+    
+    // MARK: - API
+    func fetchUser() {
+        UserService.fetchUser { user in
+            print("유저 정보가 갱신되었습니다.")
+            self.user = user
+        }
+    }
+    
     // MARK: - Helper
     func configureCollectionView() {
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: cellIdentifier)
@@ -37,6 +53,7 @@ extension ProfileController {
     }
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! ProfileHeader
+        header.user = self.user
         return header
     }
 }

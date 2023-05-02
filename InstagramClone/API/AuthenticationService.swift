@@ -33,7 +33,7 @@ struct AuthenticationService {
                                           "profileImageUrl": imageUrl,
                                           "uid": uid,
                                           "username": credentials.username]
-                userRef.document(uid).setData(data, completion: completion)
+                USER_REF.document(uid).setData(data, completion: completion)
             }
         }
         

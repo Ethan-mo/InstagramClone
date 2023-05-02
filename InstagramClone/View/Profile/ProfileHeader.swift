@@ -6,9 +6,18 @@
 //
 
 import UIKit
+import SDWebImage
+
 
 class ProfileHeader: UICollectionReusableView {
     // MARK: - Properties
+    var user: User? {
+        didSet{
+            print("Header지역 입니다.")
+            updateData()
+        }
+    }
+    
     private var profileImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "venom-7"))
         iv.contentMode = .scaleAspectFill
@@ -66,12 +75,12 @@ class ProfileHeader: UICollectionReusableView {
     }()
     private var topDivider: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGroupedBackground
         return view
     }()
     private var bottomDivider: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGroupedBackground
         return view
     }()
     
@@ -137,36 +146,43 @@ class ProfileHeader: UICollectionReusableView {
         mainStack.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 20, paddingRight: 20)
         
         addSubview(nameLabel)
-        nameLabel.anchor(top: mainStack.bottomAnchor, left: leftAnchor, paddingTop: 20, paddingLeft: 12)
+        nameLabel.anchor(top: mainStack.bottomAnchor, left: leftAnchor, paddingTop: 14, paddingLeft: 12)
         
         
-        let buttonStack = UIStackView(arrangedSubviews: [editProfileButton, shareProfileButton])
+        let buttonStack = UIStackView(arrangedSubviews: [editProfileButton])//, shareProfileButton])
         buttonStack.axis = .horizontal
         buttonStack.spacing = 8
         buttonStack.distribution = .fillEqually
         
         addSubview(buttonStack)
-        buttonStack.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 12, paddingRight: 12)
-        buttonStack.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        buttonStack.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingRight: 12)
         
 //        addSubview(storyHighLightLabel)
 //        storyHighLightLabel.anchor(top: buttonStack.bottomAnchor, left: leftAnchor, paddingTop: 80, paddingLeft: 12)
-        addSubview(topDivider)
-        topDivider.anchor(top:buttonStack.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 1)
+        
         
         let buttonStack2 = UIStackView(arrangedSubviews: [gridButton, listButton, bookmarkButton])
         addSubview(buttonStack2)
         buttonStack2.axis = .horizontal
         buttonStack2.distribution = .fillEqually
-        buttonStack2.anchor(top:topDivider.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 13)
+        buttonStack2.anchor(top: buttonStack.bottomAnchor,left: leftAnchor, right: rightAnchor, paddingTop: 10, height: 50)
 
+        addSubview(topDivider)
+        topDivider.anchor(top:buttonStack2.topAnchor, left: leftAnchor, right: rightAnchor, height: 0.5)
+        
         addSubview(bottomDivider)
-        bottomDivider.anchor(top:buttonStack2.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 1)
+        bottomDivider.anchor(top:buttonStack2.bottomAnchor, left: leftAnchor, right: rightAnchor, height: 0.5)
     }
     
     func attributedStatText(value: Int, label: String) -> NSAttributedString {
         let attributedText = NSMutableAttributedString(string: "\(value)\n", attributes: [.font:UIFont.boldSystemFont(ofSize: 15)])
         attributedText.append(NSAttributedString(string: label, attributes: [.font:UIFont.systemFont(ofSize: 15)]))
         return attributedText
+    }
+    
+    func updateData() {
+        guard let user = user else { return }
+        nameLabel.text = user.fullname
+        profileImageView.sd_setImage(with: URL(string: user.profileImageStr))
     }
 }
