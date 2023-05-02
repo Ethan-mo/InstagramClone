@@ -9,5 +9,7 @@ import Foundation
 import Firebase
 
 
-let ref = Firestore.firestore()
-let userRef = ref.collection("users")
+let REF = Firestore.firestore()
+let USER_REF = REF.collection("users")
+
+

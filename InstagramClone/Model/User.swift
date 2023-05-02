@@ -7,17 +7,21 @@
 
 import UIKit
 
-class User {
+struct User {
     var uid: String
     var email: String
     var fullname: String
     var nickname: String
-    var profileImageStr: String
-    init(uid: String,email: String, fullname: String, nickname: String, profileImageStr: String) {
-        self.uid = uid
-        self.email = email
-        self.fullname = fullname
-        self.nickname = nickname
-        self.profileImageStr = profileImageStr
+    var profileImageStr: String = ""
+    
+    init(dictionary: [String: AnyObject]) {
+        self.uid = dictionary["uid"] as? String ?? ""
+        self.nickname = dictionary["username"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
+        self.fullname = dictionary["fullname"] as? String ?? ""
+        
+        if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
+            self.profileImageStr = profileImageUrlString
+        }
     }
 }
