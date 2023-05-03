@@ -34,6 +34,7 @@
 		A9D229B429F66B71003A7BE7 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D229B329F66B71003A7BE7 /* AuthenticationService.swift */; };
 		A9F7DD2529FA71F9003216BC /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD2429FA71F9003216BC /* ProfileCell.swift */; };
 		A9F7DD2729FA7201003216BC /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD2629FA7201003216BC /* ProfileHeader.swift */; };
+		A9F7DD402A022CDE003216BC /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD3F2A022CDE003216BC /* ProfileHeaderViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		A9D229B329F66B71003A7BE7 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		A9F7DD2429FA71F9003216BC /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		A9F7DD2629FA7201003216BC /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		A9F7DD3F2A022CDE003216BC /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
 		B157646A7D87B43D10D7E98F /* Pods_InstagramClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E87CB14E422DD4D33CBBB3 /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				A9D229AA29F64B94003A7BE7 /* Authentication */,
+				A9F7DD3F2A022CDE003216BC /* ProfileHeaderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				A9D229B229F6699D003A7BE7 /* Constant.swift in Sources */,
 				A9F7DD2729FA7201003216BC /* ProfileHeader.swift in Sources */,
 				A9D2299629ED679C003A7BE7 /* ImageSelectorController.swift in Sources */,
+				A9F7DD402A022CDE003216BC /* ProfileHeaderViewModel.swift in Sources */,
 				A9D2299829ED67AA003A7BE7 /* NotificationController.swift in Sources */,
 				A9D2299E29EEA45F003A7BE7 /* Extension.swift in Sources */,
 				A9D229A729F63CC8003A7BE7 /* User.swift in Sources */,
