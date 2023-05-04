@@ -24,6 +24,9 @@ class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         configureCollectionView()
         view.backgroundColor = .systemYellow
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchUser()
     }
     
