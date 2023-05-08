@@ -8,12 +8,9 @@
 import UIKit
 class UserCell: UITableViewCell {
     // MARK: - Properties
-    var user: User? {
+    var userCellViewModel: UserCellViewModel? {
         didSet{
-            print("user값이 들어왔습니다.")
-            print(user)
-            configureData()
-            configureUI()
+            configureViewModel()
         }
     }
     
@@ -60,10 +57,10 @@ class UserCell: UITableViewCell {
         stack.centerY(inView: profileImageView, leftAnchor: profileImageView.rightAnchor, paddingLeft: 20)
         
     }
-    func configureData() {
-        guard let user = user else { return }
-        profileImageView.sd_setImage(with: URL(string: user.profileImageStr))
-        nickNameLabel.text = user.nickname
-        fullNameLabel.text = user.fullname
+    func configureViewModel() {
+        guard let viewModel = userCellViewModel else { return }
+        profileImageView.sd_setImage(with: viewModel.profileImageUrl)
+        nickNameLabel.text = viewModel.nickname
+        fullNameLabel.text = viewModel.fullname
     }
 }
