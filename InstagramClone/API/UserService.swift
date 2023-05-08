@@ -19,6 +19,22 @@ struct UserService {
             completion(user)
         }
     }
+    static func fetchUsers(completion: @escaping([User]) -> Void) {
+        var users = [User]()
+        USER_REF.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error: 유저들의 정보를 불러오지 못했습니다.")
+            }
+            guard let snapshots = snapshot?.documents else { return }
+            for document in snapshots {
+                guard let dictionary = document.data() as? [String:AnyObject] else { return }
+                let user = User(dictionary: dictionary)
+                users.append(user)
+                print("유저 정보들을 성공적으로 불러왔습니다.")
+                completion(users)
+            }
+        }
+    }
 }
 
 struct ImageUploader {

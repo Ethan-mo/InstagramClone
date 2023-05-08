@@ -35,6 +35,8 @@
 		A9F7DD2529FA71F9003216BC /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD2429FA71F9003216BC /* ProfileCell.swift */; };
 		A9F7DD2729FA7201003216BC /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD2629FA7201003216BC /* ProfileHeader.swift */; };
 		A9F7DD402A022CDE003216BC /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD3F2A022CDE003216BC /* ProfileHeaderViewModel.swift */; };
+		A9F7DD4B2A08C83D003216BC /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD4A2A08C83D003216BC /* UserCell.swift */; };
+		A9F7DD4D2A08CE0F003216BC /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F7DD4C2A08CE0F003216BC /* UserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,8 @@
 		A9F7DD2429FA71F9003216BC /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		A9F7DD2629FA7201003216BC /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		A9F7DD3F2A022CDE003216BC /* ProfileHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewModel.swift; sourceTree = "<group>"; };
+		A9F7DD4A2A08C83D003216BC /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		A9F7DD4C2A08CE0F003216BC /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		B157646A7D87B43D10D7E98F /* Pods_InstagramClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6E87CB14E422DD4D33CBBB3 /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,6 +183,7 @@
 			children = (
 				A9D229AA29F64B94003A7BE7 /* Authentication */,
 				A9F7DD3F2A022CDE003216BC /* ProfileHeaderViewModel.swift */,
+				A9F7DD4C2A08CE0F003216BC /* UserViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 		A9D2298D29E6BC16003A7BE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A9F7DD492A08C81B003216BC /* Search */,
 				A9F7DD2329FA71EA003216BC /* Profile */,
 				A9D2299B29EE626B003A7BE7 /* FeedCell.swift */,
 			);
@@ -225,6 +231,14 @@
 				A9F7DD2629FA7201003216BC /* ProfileHeader.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		A9F7DD492A08C81B003216BC /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				A9F7DD4A2A08C83D003216BC /* UserCell.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +365,7 @@
 				A9D229A029F220D0003A7BE7 /* LoginController.swift in Sources */,
 				A9F7DD2529FA71F9003216BC /* ProfileCell.swift in Sources */,
 				A9D229A929F6426C003A7BE7 /* LoginViewModel.swift in Sources */,
+				A9F7DD4B2A08C83D003216BC /* UserCell.swift in Sources */,
 				A9D2299C29EE626B003A7BE7 /* FeedCell.swift in Sources */,
 				A9D229B229F6699D003A7BE7 /* Constant.swift in Sources */,
 				A9F7DD2729FA7201003216BC /* ProfileHeader.swift in Sources */,
@@ -365,6 +380,7 @@
 				A9D2299229ED677D003A7BE7 /* FeedController.swift in Sources */,
 				A9D2299029E6BCE2003A7BE7 /* MainTabController.swift in Sources */,
 				A9D2297829E54417003A7BE7 /* SceneDelegate.swift in Sources */,
+				A9F7DD4D2A08CE0F003216BC /* UserViewModel.swift in Sources */,
 				A9D229B429F66B71003A7BE7 /* AuthenticationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
