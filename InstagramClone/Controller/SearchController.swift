@@ -11,8 +11,18 @@ private let reuseIdentifier = "UserCell"
 
 class SearchController: UITableViewController {
     // MARK: - Properties
-    var users = [User]()
+    var searchController: UISearchController!
     
+    var users = [User]() {
+        didSet{
+            tableView.reloadData()
+        }
+    }
+    var filterUsers = [User]() {
+        didSet{
+            tableView.reloadData()
+        }
+    }
     // MARK: - Lifecycle
     init() {
         super.init(style: .plain)
@@ -25,13 +35,14 @@ class SearchController: UITableViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         configureUI()
+        configureSearchController()
         fetchUsers()
     }
     // MARK: - API
     func fetchUsers() {
         UserService.fetchUsers { users in
             self.users = users
-            print("SearchController에 정상적으로 유저 정보들을 불러왔습니다.")
+            self.filterUsers = users
             self.tableView.reloadData()
         }
     }
@@ -43,14 +54,27 @@ class SearchController: UITableViewController {
         tableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.backgroundColor = .white
     }
+    func configureSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.title = "사용자 검색"
+        searchController.searchBar.placeholder = "사용자 이름"
+        
+        navigationItem.searchController = searchController
+        definesPresentationContext = false
+
+        searchController.hidesNavigationBarDuringPresentation = false
+    }
 }
+// MARK: - UITableViewDatasource
 extension SearchController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return filterUsers.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
-        cell.userCellViewModel = UserCellViewModel(user: users[indexPath.row])
+        cell.userCellViewModel = UserCellViewModel(user: filterUsers[indexPath.row])
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -58,4 +82,26 @@ extension SearchController {
         return height
     }
 }
+// MARK: - UITableViewDelegate
+extension SearchController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("SearchController에서 user: \(users[indexPath.row].nickname)의 정보를 불러와 새로운 ProfileController를 엽니다.")
+        let controller = ProfileController(user: users[indexPath.row])
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+}
 
+extension SearchController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if searchController.searchBar.text == "" {
+            filterUsers = users
+        } else {
+            guard let searchText = searchController.searchBar.text?.lowercased() else { return }
+            filterUsers = users.filter { $0.nickname.contains(searchText) || $0.fullname.contains(searchText)}
+        }
+    }
+        // 검색 중인지 확인하는 함수
+        func isFiltering() -> Bool {
+            return searchController.isActive && !(searchController.searchBar.text?.isEmpty ?? true)
+        }
+}
