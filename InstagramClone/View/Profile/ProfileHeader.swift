@@ -11,13 +11,14 @@ import SDWebImage
 
 class ProfileHeader: UICollectionReusableView {
     // MARK: - Properties
-    var user: User? {
+    
+    var viewModel: ProfileHeaderViewModel? {
         didSet{
             print("Header지역 입니다.")
             updateData()
         }
     }
-    
+
     private var profileImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "venom-7"))
         iv.contentMode = .scaleAspectFill
@@ -181,8 +182,7 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     func updateData() {
-        guard let user = user else { return }
-        nameLabel.text = user.fullname
-        profileImageView.sd_setImage(with: URL(string: user.profileImageStr))
+        nameLabel.text = viewModel?.nickname
+        profileImageView.sd_setImage(with: URL(string: viewModel!.profileImagestr))
     }
 }

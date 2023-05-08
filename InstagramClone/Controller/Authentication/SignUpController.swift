@@ -9,6 +9,8 @@ import UIKit
 
 class SignUpController: UIViewController {
     // MARK: - Properties
+    weak var delegate: AuthenticationDelegate?
+    
     let imagePicker = UIImagePickerController()
     var profileImage: UIImage?
     
@@ -113,7 +115,8 @@ class SignUpController: UIViewController {
             }
             print("계정 생성에 성공하였습니다.")
             //navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true) // 아주 놀랍게도, 계정을 만드는 것과 동시에, 로그인이 진행된다. 이후에 Auth.auth().currentUser값이 true가 된다.
+            self.delegate?.authenticationDidComplete()
+            // 아주 놀랍게도, 계정을 만드는 것과 동시에, 로그인이 진행된다. 이후에 Auth.auth().currentUser값이 true가 된다.
         }
     }
     
