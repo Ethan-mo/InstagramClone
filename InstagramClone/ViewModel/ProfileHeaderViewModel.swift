@@ -36,6 +36,10 @@ struct ProfileHeaderViewModel {
         return false
     }
     
+    var isFollow: Bool {
+        return 
+    }
+    
     
     init(user: User) {
         self.user = user

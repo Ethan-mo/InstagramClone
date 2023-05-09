@@ -63,9 +63,10 @@ class ProfileHeader: UICollectionReusableView {
         btn.addTarget(self, action: #selector(editProfileButtonTapped), for: .touchUpInside)
         return btn
     }()
-    private lazy var shareProfileButton: UIButton = {
-        let btn = Utilities().customButton(text: "프로필 공유", backgroundColor: .white, textColor: .black)
-        btn.addTarget(self, action: #selector(shareProfileButtonTapped), for: .touchUpInside)
+    private lazy var followButton: UIButton = {
+        let btn = Utilities().customButton(text: "팔로잉", backgroundColor: .white, textColor: .black)
+        btn.addTarget(self, action: #selector(followButtonTapped), for: .touchUpInside)
+        btn.isHidden = true
         return btn
     }()
     private let storyHighLightLabel: UILabel = {
@@ -121,7 +122,7 @@ class ProfileHeader: UICollectionReusableView {
     @objc func editProfileButtonTapped() {
         print("프로필 편집 버튼이 눌렸습니다.")
     }
-    @objc func shareProfileButtonTapped() {
+    @objc func followButtonTapped() {
         print("프로필 공유 버튼이 눌렸습니다.")
     }
     @objc func tappedGridButton() {
@@ -150,7 +151,7 @@ class ProfileHeader: UICollectionReusableView {
         nameLabel.anchor(top: mainStack.bottomAnchor, left: leftAnchor, paddingTop: 14, paddingLeft: 12)
         
         
-        let buttonStack = UIStackView(arrangedSubviews: [editProfileButton])//, shareProfileButton])
+        let buttonStack = UIStackView(arrangedSubviews: [editProfileButton, followButton])//, shareProfileButton])
         buttonStack.axis = .horizontal
         buttonStack.spacing = 8
         buttonStack.distribution = .fillEqually
@@ -182,7 +183,12 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     func updateData() {
-        nameLabel.text = viewModel?.nickname
-        profileImageView.sd_setImage(with: URL(string: viewModel!.profileImagestr))
+        guard let viewModel = viewModel else { return }
+        nameLabel.text = viewModel.nickname
+        profileImageView.sd_setImage(with: URL(string: viewModel.profileImagestr))
+        if !viewModel.isMyAccount {
+            editProfileButton.isHidden = true
+            followButton.isHidden = false
+        }
     }
 }
