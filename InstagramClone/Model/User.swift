@@ -13,6 +13,9 @@ struct User {
     var fullname: String
     var nickname: String
     var profileImageStr: String = ""
+    var isFollowed: Bool = false
+    var userRelationStats: UserRelationStats?
+    
     
     init(dictionary: [String: AnyObject]) {
         self.uid = dictionary["uid"] as? String ?? ""
@@ -24,4 +27,9 @@ struct User {
             self.profileImageStr = profileImageUrlString
         }
     }
+}
+
+struct UserRelationStats {
+    var followers: Int
+    var following: Int
 }

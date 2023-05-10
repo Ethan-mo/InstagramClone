@@ -37,7 +37,7 @@ struct ProfileHeaderViewModel {
     }
     
     var isFollow: Bool {
-        return 
+        return user.isFollowed
     }
     
     
