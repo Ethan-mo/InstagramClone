@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 import SDWebImage
 
 
@@ -123,7 +124,15 @@ class ProfileHeader: UICollectionReusableView {
         print("프로필 편집 버튼이 눌렸습니다.")
     }
     @objc func followButtonTapped() {
-        print("프로필 공유 버튼이 눌렸습니다.")
+        print("[팔로우/팔로우취소]버튼이 눌렸습니다.")
+        guard let viewModel = viewModel else { return }
+        if viewModel.isFollowed {
+            unfollowingUser()
+        }else {
+            followingUser()
+        }
+
+        
     }
     @objc func tappedGridButton() {
         print("1")
@@ -134,7 +143,24 @@ class ProfileHeader: UICollectionReusableView {
     @objc func tappedBookmarkButton() {
         print("3")
     }
-    
+    // MARK: - API
+    func followingUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let viewModel = self.viewModel else { return }
+        UserService.addFollowMember(myUid: uid, otherUid: viewModel.uid) { user in
+            print("Following하는 것에 성공했습니다.")
+            self.viewModel?.user = user
+        }
+    }
+    func unfollowingUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let viewModel = self.viewModel else { return }
+        UserService.removeFollowMember(myUid: uid, otherUid: viewModel.uid) { user in
+            print("UnFollowing하는 것에 성공했습니다.")
+            self.viewModel?.user = user
+        }
+    }
+
     // MARK: - Helper
     func configureUI() {
         
@@ -183,12 +209,21 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     func updateData() {
+        print("updateData가 실행되었습니다.")
         guard let viewModel = viewModel else { return }
         nameLabel.text = viewModel.nickname
         profileImageView.sd_setImage(with: URL(string: viewModel.profileImagestr))
+        
         if !viewModel.isMyAccount {
             editProfileButton.isHidden = true
             followButton.isHidden = false
         }
+        if viewModel.isFollowed {
+            followButton.setTitle("팔로우 해제", for: .normal)
+        }else {
+            followButton.setTitle("팔로우", for: .normal)
+        }
+        followerLabel.attributedText = attributedStatText(value: viewModel.followersCount, label: "팔로워")
+        followingLabel.attributedText = attributedStatText(value: viewModel.followingCount, label: "팔로잉")
     }
 }

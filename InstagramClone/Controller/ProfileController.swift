@@ -14,7 +14,6 @@ private let headerIdentifier = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     // MARK: - Properties
     private var user: User
-    
     // MARK: - Lifecycle
     
     init(user: User) {
@@ -29,10 +28,21 @@ class ProfileController: UICollectionViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         configureCollectionView()
+        getFollowingMembers()
     }
     
     // MARK: - API
-    
+    func getFollowingMembers() {
+        UserService.getFollowingMembers { uids in
+            if uids.contains(self.user.uid) {
+                self.user.isFollowed = true
+                
+            }else {
+                self.user.isFollowed = false
+            }
+            self.collectionView.reloadData()
+        }
+    }
     
     // MARK: - Helper
     func configureCollectionView() {

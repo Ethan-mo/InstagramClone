@@ -10,7 +10,7 @@ import Firebase
 
 
 struct ProfileHeaderViewModel {
-    let user: User
+    var user: User
     
     var uid: String {
         return user.uid
@@ -28,6 +28,13 @@ struct ProfileHeaderViewModel {
         return user.profileImageStr
     }
     
+    var followingCount: Int {
+        return user.userRelationStats?.following ?? 0
+    }
+    var followersCount: Int {
+        return user.userRelationStats?.followers ?? 0
+    }
+    
     var isMyAccount: Bool {
         guard let uid = Auth.auth().currentUser?.uid else { return false }
         if self.user.uid == uid {
@@ -36,7 +43,7 @@ struct ProfileHeaderViewModel {
         return false
     }
     
-    var isFollow: Bool {
+    var isFollowed: Bool {
         return user.isFollowed
     }
     
