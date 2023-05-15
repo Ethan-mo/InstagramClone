@@ -14,4 +14,7 @@ let USER_REF = REF.collection("users")
 let FOLLOW_REF = REF.collection("user-followed")
 let FOLLOWING_REF = REF.collection("user-following")
 
+let COLLECTION_FOLLOWERS = REF.collection("followers")
+let COLLECTION_FOLLOWING = REF.collection("following")
+
 

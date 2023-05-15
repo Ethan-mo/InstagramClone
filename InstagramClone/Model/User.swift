@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 struct User {
     var uid: String
@@ -14,6 +15,7 @@ struct User {
     var nickname: String
     var profileImageStr: String = ""
     var isFollowed: Bool = false
+    var isCurrentUser: Bool { return Auth.auth().currentUser?.uid == uid }
     var userRelationStats: UserRelationStats?
     
     

@@ -43,10 +43,16 @@ struct ProfileHeaderViewModel {
         return false
     }
     
-    var isFollowed: Bool {
-        return user.isFollowed
+    var followButtonText: String {
+        return user.isCurrentUser ? "프로필 편집" : (user.isFollowed ? "팔로잉" : "팔로우")
+        
     }
-    
+    var followButtonBackgroundColor: UIColor {
+        return user.isCurrentUser ? .white : (user.isFollowed ? .white : .systemBlue)
+    }
+    var followButtonTextColor: UIColor {
+        return user.isCurrentUser ? .black : (user.isFollowed ? .red : .white)
+    }
     
     init(user: User) {
         self.user = user
