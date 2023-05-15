@@ -6,18 +6,24 @@
 //
 
 import UIKit
+import Firebase
 import SDWebImage
 
+protocol ProfileHeaderDelegate: class {
+    func header(_ profileHeader: ProfileHeader, didTapActionButtonFor user: User)
+}
 
 class ProfileHeader: UICollectionReusableView {
     // MARK: - Properties
     
     var viewModel: ProfileHeaderViewModel? {
         didSet{
-            print("Header지역 입니다.")
+            print("viewData의 변화가 감지되었습니다.")
             updateData()
         }
     }
+    
+    weak var delegate: ProfileHeaderDelegate?
 
     private var profileImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "venom-7"))
@@ -58,16 +64,12 @@ class ProfileHeader: UICollectionReusableView {
         lb.textAlignment = .center
         return lb
     }()
-    private lazy var editProfileButton: UIButton = {
-        let btn = Utilities().customButton(text: "프로필 편집", backgroundColor: .white, textColor: .black)
-        btn.addTarget(self, action: #selector(editProfileButtonTapped), for: .touchUpInside)
+    private lazy var editProfileFollowButton: UIButton = {
+        let btn = Utilities().customButton(text: "불러오는중...", backgroundColor: .white, textColor: .black)
+        btn.addTarget(self, action: #selector(editProfileFollowButtonTapped), for: .touchUpInside)
         return btn
     }()
-    private lazy var shareProfileButton: UIButton = {
-        let btn = Utilities().customButton(text: "프로필 공유", backgroundColor: .white, textColor: .black)
-        btn.addTarget(self, action: #selector(shareProfileButtonTapped), for: .touchUpInside)
-        return btn
-    }()
+
     private let storyHighLightLabel: UILabel = {
        let lb = UILabel()
         lb.font = UIFont.boldSystemFont(ofSize: 16)
@@ -118,12 +120,11 @@ class ProfileHeader: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     // MARK: - Selectors
-    @objc func editProfileButtonTapped() {
-        print("프로필 편집 버튼이 눌렸습니다.")
+    @objc func editProfileFollowButtonTapped() {
+        guard let viewModel = viewModel else { return }
+        delegate?.header(self, didTapActionButtonFor: viewModel.user)
     }
-    @objc func shareProfileButtonTapped() {
-        print("프로필 공유 버튼이 눌렸습니다.")
-    }
+
     @objc func tappedGridButton() {
         print("1")
     }
@@ -133,7 +134,24 @@ class ProfileHeader: UICollectionReusableView {
     @objc func tappedBookmarkButton() {
         print("3")
     }
-    
+    // MARK: - API
+    func followingUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let viewModel = self.viewModel else { return }
+        UserService.addFollowMember(myUid: uid, otherUid: viewModel.uid) { user in
+            print("Following하는 것에 성공했습니다.")
+            self.viewModel?.user = user
+        }
+    }
+    func unfollowingUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let viewModel = self.viewModel else { return }
+        UserService.removeFollowMember(myUid: uid, otherUid: viewModel.uid) { user in
+            print("UnFollowing하는 것에 성공했습니다.")
+            self.viewModel?.user = user
+        }
+    }
+
     // MARK: - Helper
     func configureUI() {
         
@@ -150,13 +168,9 @@ class ProfileHeader: UICollectionReusableView {
         nameLabel.anchor(top: mainStack.bottomAnchor, left: leftAnchor, paddingTop: 14, paddingLeft: 12)
         
         
-        let buttonStack = UIStackView(arrangedSubviews: [editProfileButton])//, shareProfileButton])
-        buttonStack.axis = .horizontal
-        buttonStack.spacing = 8
-        buttonStack.distribution = .fillEqually
         
-        addSubview(buttonStack)
-        buttonStack.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingRight: 12)
+        addSubview(editProfileFollowButton)
+        editProfileFollowButton.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingRight: 12)
         
 //        addSubview(storyHighLightLabel)
 //        storyHighLightLabel.anchor(top: buttonStack.bottomAnchor, left: leftAnchor, paddingTop: 80, paddingLeft: 12)
@@ -166,7 +180,7 @@ class ProfileHeader: UICollectionReusableView {
         addSubview(buttonStack2)
         buttonStack2.axis = .horizontal
         buttonStack2.distribution = .fillEqually
-        buttonStack2.anchor(top: buttonStack.bottomAnchor,left: leftAnchor, right: rightAnchor, paddingTop: 10, height: 50)
+        buttonStack2.anchor(top: editProfileFollowButton.bottomAnchor,left: leftAnchor, right: rightAnchor, paddingTop: 10, height: 50)
 
         addSubview(topDivider)
         topDivider.anchor(top:buttonStack2.topAnchor, left: leftAnchor, right: rightAnchor, height: 0.5)
@@ -182,7 +196,17 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     func updateData() {
-        nameLabel.text = viewModel?.nickname
-        profileImageView.sd_setImage(with: URL(string: viewModel!.profileImagestr))
+        print("updateData가 실행되었습니다.")
+        guard let viewModel = viewModel else { return }
+        nameLabel.text = viewModel.nickname
+        profileImageView.sd_setImage(with: URL(string: viewModel.profileImagestr))
+        
+        editProfileFollowButton.setTitle(viewModel.followButtonText, for: .normal)
+        editProfileFollowButton.setTitleColor(viewModel.followButtonTextColor, for: .normal)
+        editProfileFollowButton.backgroundColor = viewModel.followButtonBackgroundColor
+        
+        followerLabel.attributedText = attributedStatText(value: viewModel.user.userStats.followers, label: "팔로워")
+        followingLabel.attributedText = attributedStatText(value: viewModel.user.userStats.following, label: "팔로잉")
+        postsLabel.attributedText = attributedStatText(value: 0, label: "게시물")
     }
 }

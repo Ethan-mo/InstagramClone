@@ -5,12 +5,12 @@
 //  Created by 모상현 on 2023/05/03.
 //
 
-import Foundation
+import UIKit
 import Firebase
 
 
 struct ProfileHeaderViewModel {
-    let user: User
+    var user: User
     
     var uid: String {
         return user.uid
@@ -28,6 +28,13 @@ struct ProfileHeaderViewModel {
         return user.profileImageStr
     }
     
+    var followingCount: Int {
+        return user.userStats.following
+    }
+    var followersCount: Int {
+        return user.userStats.followers
+    }
+    
     var isMyAccount: Bool {
         guard let uid = Auth.auth().currentUser?.uid else { return false }
         if self.user.uid == uid {
@@ -36,6 +43,16 @@ struct ProfileHeaderViewModel {
         return false
     }
     
+    var followButtonText: String {
+        return user.isCurrentUser ? "프로필 편집" : (user.isFollowed ? "팔로잉" : "팔로우")
+        
+    }
+    var followButtonBackgroundColor: UIColor {
+        return user.isCurrentUser ? .white : (user.isFollowed ? .white : .systemBlue)
+    }
+    var followButtonTextColor: UIColor {
+        return user.isCurrentUser ? .black : (user.isFollowed ? .red : .white)
+    }
     
     init(user: User) {
         self.user = user

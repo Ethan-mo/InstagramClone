@@ -23,6 +23,10 @@ class SearchController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    private var isSearchMode: Bool {
+        return searchController.isActive && !searchController.searchBar.text!.isEmpty
+    }
     // MARK: - Lifecycle
     init() {
         super.init(style: .plain)
@@ -36,6 +40,10 @@ class SearchController: UITableViewController {
         super.viewDidLoad()
         configureUI()
         configureSearchController()
+        fetchUsers()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchUsers()
     }
     // MARK: - API
@@ -58,7 +66,7 @@ class SearchController: UITableViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.title = "사용자 검색"
+        navigationItem.title = "사용자 검색"
         searchController.searchBar.placeholder = "사용자 이름"
         
         navigationItem.searchController = searchController
@@ -70,11 +78,12 @@ class SearchController: UITableViewController {
 // MARK: - UITableViewDatasource
 extension SearchController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterUsers.count
+        return isSearchMode ? filterUsers.count : users.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
-        cell.userCellViewModel = UserCellViewModel(user: filterUsers[indexPath.row])
+        let user = isSearchMode ? filterUsers[indexPath.row] : users[indexPath.row]
+        cell.userCellViewModel = UserCellViewModel(user: user)
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -93,12 +102,9 @@ extension SearchController {
 
 extension SearchController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        if searchController.searchBar.text == "" {
-            filterUsers = users
-        } else {
-            guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-            filterUsers = users.filter { $0.nickname.contains(searchText) || $0.fullname.contains(searchText)}
-        }
+        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
+        filterUsers = users.filter { $0.nickname.contains(searchText) || $0.fullname.contains(searchText)}
+        
     }
         // 검색 중인지 확인하는 함수
         func isFiltering() -> Bool {
