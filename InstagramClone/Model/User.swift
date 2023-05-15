@@ -16,7 +16,7 @@ struct User {
     var profileImageStr: String = ""
     var isFollowed: Bool = false
     var isCurrentUser: Bool { return Auth.auth().currentUser?.uid == uid }
-    var userRelationStats: UserRelationStats?
+    var userStats: UserStats
     
     
     init(dictionary: [String: AnyObject]) {
@@ -28,10 +28,13 @@ struct User {
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             self.profileImageStr = profileImageUrlString
         }
+        
+        self.userStats = UserStats(followers: 0, following: 0)
     }
 }
 
-struct UserRelationStats {
+struct UserStats {
     var followers: Int
     var following: Int
+    //var posts: Int
 }

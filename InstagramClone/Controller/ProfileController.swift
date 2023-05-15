@@ -30,12 +30,10 @@ class ProfileController: UICollectionViewController {
         // ProfileController에서 핵심적으로 사용되는 User Data의 값을 불러온다.
         /// 지금 가져올 Data는, 기본적인 User Model에는 없는, 즉, FetchUsers Api로는 가져올 수 없는 Data이기 때문에, 지금 가져온다.
         checkIfUserIsFollowed(uid: user.uid)
+        fetchUserStats(uid: user.uid)
         // ProfileController의 기본 구조를 설정
         configureCollectionView()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        checkIfUserIsFollowed(uid: user.uid)
+        
     }
     
     // MARK: - API
@@ -67,6 +65,12 @@ class ProfileController: UICollectionViewController {
     func checkIfUserIsFollowed(uid: String) {
         UserService.checkIfUserIsFollowed(uid: uid) { isFollowed in
             self.user.isFollowed = isFollowed
+            self.collectionView.reloadData()
+        }
+    }
+    func fetchUserStats(uid: String) {
+        UserService.fetchUserStats(uid: uid) { userStats in
+            self.user.userStats = userStats
             self.collectionView.reloadData()
         }
     }
@@ -129,9 +133,11 @@ extension ProfileController: ProfileHeaderDelegate {
         }else if user.isFollowed {
             print("언팔로우 버튼을 눌렀습니다.")
             unfollow(uid: user.uid)
+            fetchUserStats(uid: user.uid)
         }else {
             print("팔로우 버튼을 눌렀습니다.")
             follow(uid: user.uid)
+            fetchUserStats(uid: user.uid)
         }
     }
 }

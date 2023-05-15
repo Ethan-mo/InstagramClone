@@ -5,7 +5,7 @@
 //  Created by 모상현 on 2023/05/03.
 //
 
-import Foundation
+import UIKit
 import Firebase
 
 
@@ -29,10 +29,10 @@ struct ProfileHeaderViewModel {
     }
     
     var followingCount: Int {
-        return user.userRelationStats?.following ?? 0
+        return user.userStats.following
     }
     var followersCount: Int {
-        return user.userRelationStats?.followers ?? 0
+        return user.userStats.followers
     }
     
     var isMyAccount: Bool {

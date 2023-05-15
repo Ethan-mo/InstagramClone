@@ -205,7 +205,8 @@ class ProfileHeader: UICollectionReusableView {
         editProfileFollowButton.setTitleColor(viewModel.followButtonTextColor, for: .normal)
         editProfileFollowButton.backgroundColor = viewModel.followButtonBackgroundColor
         
-        followerLabel.attributedText = attributedStatText(value: viewModel.followersCount, label: "팔로워")
-        followingLabel.attributedText = attributedStatText(value: viewModel.followingCount, label: "팔로잉")
+        followerLabel.attributedText = attributedStatText(value: viewModel.user.userStats.followers, label: "팔로워")
+        followingLabel.attributedText = attributedStatText(value: viewModel.user.userStats.following, label: "팔로잉")
+        postsLabel.attributedText = attributedStatText(value: 0, label: "게시물")
     }
 }
